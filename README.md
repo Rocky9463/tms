@@ -1,5 +1,5 @@
 # tms<br>
-This is a basic tenant management system project, which lets your store data of your tenant and rent.<br>
+This is a basic tenant management system project, which lets you store data of your tenant and their rent details.<br>
 <br>
 To use the code<br>
 1. Download the zip file and extract it or clone the repository
