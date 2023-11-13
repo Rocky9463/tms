@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tenant management system</title>
+</head>
+<?php
+    session_start();
+    $email = $_SESSION['email1'];
+    if(!$_SESSION['email1']){
+        header('Location: indexlog.html');
+    }
+    include_once 'db.php';
+        $sql = "SELECT * FROM building_details WHERE email = '$email'";
+        $result = mysqli_query($conn, $sql);
+        while($row = mysqli_fetch_assoc($result)) {
+            if($row["email"]==$email){
+                $b_name = $row["building_name"];
+            }
+        }
+?>
+<body><br><br><br>
+    <div class="o_name">
+        <?php
+           
+            echo $_SESSION['name1'];
+        ?>
+    </div><br><br>
+    <div class="buildings">
+        <div class="building1" id="building1">
+            <figure><a href="addrooms.html"><button id="edit_button">Edit</button></a><a href="tenantpage.html">
+                <img src="images/hr1.png" id="build_imag">
+                <figcaption>
+                    <?php
+                        //$b_name = $_POST['building_name'];
+                        echo $b_name;  
+                    ?>
+                </figcaption></a>
+            </figure>
+      </div>
+        <div class="addbuilding">
+            <figure> <a href="addbuilding.html">
+                <img src="images/add.png">
+                <figcaption>Add Building</figcaption></a>
+            </figure>
+       </div>
+    </div>
+    <div class="tohide">
+        <?php
+            $b_name = $_POST['building_name'];
+            $rooms = $_POST['rooms'];
+            $subflag = $_POST['submit'];
+        ?>
+    </div><br><br><br><br><br><br><br><br><br><br><br>
+    <div class="note" style="color:red;">
+        This is a free version, so you can only add one building.
+    </div>
+<form method="post" action="logout.php">
+    <input type="submit" value="log out" name="SubmitButton" id="logout_btn">
+</form>
+</body>
+</html>
+<style>
+    #logout_btn{
+        position: fixed;
+        left: 87%;
+        bottom: 91%;
+        cursor: pointer;
+        border: 1px solid ;
+        width: 6%;
+        height: 4%;
+        background: transparent;
+        font-size: 1em;
+        font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    }
+    #logout_btn:hover{
+        border: 1px solid rgb(214, 82, 82);
+        
+    }
+    #logout_btn:active{
+        border: 2px solid rgb(214, 82, 82);
+        font-weight: bold;
+    }
+    body{
+        background-color: #1f48af2f;
+    }
+    .buildings{
+        display: flex;
+        padding-left: 50px;
+    }
+    figure{
+        width: 200px;
+        border: 1px solid;
+        cursor: pointer;
+    }
+    figcaption{
+        text-align: center;
+        font-size: 1.5em;
+        color: black;
+        border-top: 1px solid black;
+    }
+    a{
+        text-decoration: none;
+    }
+    .building1, .addbuilding{
+        
+        width: 20%;
+        height: 4cm;
+        background-size: contain;
+    }
+    .building1{
+        display: none;
+    }
+    img{
+        height: 200px;;
+        width: 200px;
+    }
+    .o_name{
+        background-color: #002a52f3;
+        color: white;
+        border: 1px solid;
+        width: 87%;
+        text-align: center;
+        font-size: 5em;
+        margin: auto;
+    }
+    .tohide{
+        display: none;
+    }
+    .note{
+        width: 87%;
+        margin: auto;
+    }
+    #edit_button{
+        border-top: 0;
+        border-left: 1px solid black;
+        border-right: 0;
+        border-bottom: 1px solid black;
+        z-index: 1;
+        position: absolute;
+        margin-left: 170px;
+        cursor: pointer;
+    }
+</style>
+<?php
+   $email = $_SESSION['email1'];
+    include_once 'db.php';
+        $sql = "SELECT * FROM building_details WHERE email = '$email'";
+        $result = mysqli_query($conn, $sql);
+        while($row = mysqli_fetch_assoc($result)) {
+            if($row["email"]==$email){
+                echo "<style>.addbuilding{display: none;}.building1{display: unset;}</style>";
+            }
+        }         
+?>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tenant management system</title>
+    <link rel="stylesheet" href="top.css">
+</head>
+<?php
+    session_start();
+    $email = $_SESSION['email1'];
+    if(!$_SESSION['email1']){
+        header('Location: indexlog.html');
+    }
+    include_once 'db.php';
+        $sql = "SELECT * FROM building_details WHERE email = '$email'";
+            $result = mysqli_query($conn, $sql);
+            while($row = mysqli_fetch_assoc($result)) {
+                if($row['email']==$email){
+                    $b_name = $row['building_name'];
+                }
+            }
+            $abc = strval($email);
+            $mail = str_replace( array("@", "."), '', $abc);
+            $rentrec = $mail."_".$b_name."_rent";
+            $rentrec = strtolower($rentrec);
+        
+            $flag=0;
+            $sql = "show tables";
+            if ($result = mysqli_query($conn, $sql)) {
+            while($row = mysqli_fetch_assoc($result)) {
+                if($row["Tables_in_tmsdata"]===$rentrec){
+                  // echo $row["Tables_in_tmsdata"]; 
+                   $flag=1;
+                   break;
+                }
+            }}
+            if($flag != 1){
+                echo "<style>.rent{display: none;}</style>";
+                echo "<style>.expo{display: none;}</style>";
+            }
+?>
+<body><br><br><br>
+    <div class="o_name">
+        <?php
+                        //$b_name = $_POST['building_name'];
+                        echo $b_name;  
+                    ?>
+    </div><br><br>
+<div class="container">
+    <div class="rent">
+            <figure><a href="managerent.html">
+                <img src="images/rupees.png">
+                <figcaption>Rent</figcaption> </a>
+            </figure>
+   </div>
+    <div class="rnt">
+            <figure><a href="managetenant.html">
+                <img src="images/rnt1.png">
+                <figcaption>Tenants</figcaption>   </a>
+            </figure>
+    </div>
+    <div class="expo">
+        <figure><a href="export_rent.php">
+            <img src="images/expo.png">
+            <figcaption>Export rent data</figcaption>   </a>
+        </figure>
+    </div>
+</div> 
+<form method="post" action="logout.php">
+    <input type="submit" value="log out" name="SubmitButton" id="logout_btn">
+</form>
+<a href="owner_building.html"><button id="home_btn">Home</button></a>
+<a href="owner_building.html"><img src="images/back2.png" id="back_btn"></a>
+</body>
+</html>
+<style>
+    body{
+        background-color: #1f48af2f;
+    }
+    a{
+        text-decoration: none;
+    }
+    img{
+        height: 200px;
+        width: 200px;
+    }
+    a{
+        text-decoration: none;
+    }
+    figure{
+        width: 200px;
+        border: 1px solid;
+    }
+    figcaption{
+        text-align: center;
+        font-size: 1.5em;
+        color: black;
+        border-top: 1px solid;    
+    }
+    .container{
+        display: flex;
+        padding-left: 50px;
+    }
+</style>

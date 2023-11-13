@@ -1,0 +1,81 @@
+html{
+    zoom: 95%;
+}
+body{
+    font-size: 1 rem;
+    font-family: 'Outfit', sans-serif;
+    background-color: hsla(160, 100%, 75%, 0.486);
+}
+.content{
+    background-color: aquamarine;
+    width: 95%;
+    margin: auto;
+}
+.clssignup{   
+    display: none;
+    
+}
+.main{
+    border: 1px solid black;
+    padding: 2%;
+    margin-top: 10%;
+    background-color: aquamarine;
+    width: min(100%-2rem, 60px); 
+    max-width: 500px;  
+    margin-inline: auto;
+    box-shadow: 10px 10px 5px lightblue;
+}  
+#sign{ 
+    background-color: aquamarine;
+    box-shadow: 2px 2px hsla(172, 81%, 50%, 0.486);
+}
+#log{
+    box-shadow: -2px 2px hsla(172, 81%, 50%, 0.486);
+}
+#log, #sign{
+    border: transparent;
+    cursor: pointer;
+    font-size: 1.09rem;   
+}
+
+input{ 
+    border: none;
+    font-size: large;
+    width: 100% ;
+    outline: none;
+}
+#passwd, #passwdlogin{
+    width: 85%;
+    margin-right: 7px;
+}
+
+#see{
+    width: 10px;
+
+}
+#see:hover{
+    zoom: 102%;
+    animation: spin2 2s infinite;}
+#show_hide, #show_hidelogin{
+    font-size: 95%;
+}
+#space{
+    margin-right: 3%;   
+}
+#sub, #sublogin{  
+    border:1px solid transparent;
+    font-size: larger;
+    display: flex;
+    margin: auto;
+    justify-content: center;
+    align-content: center;
+    width: 60%;
+    cursor: pointer;
+    border-radius: 2px;
+}
+#sub:hover, #sublogin:hover{
+    border: 1px solid black;
+}
+#sub:active, #sublogin:active{
+    background-color: aquamarine;
+}

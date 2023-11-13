@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tenant management system</title>
+    <?php
+    session_start();
+    $email = $_SESSION['email1'];
+    if(!$_SESSION['email1']){
+        header('Location: indexlog.html');
+    }
+    include_once 'db.php';
+    $sql = "SELECT * FROM building_details WHERE email = '$email'";
+    $result = mysqli_query($conn, $sql);
+    while($row = mysqli_fetch_assoc($result)) {
+        if($row['email']==$email){
+            $b_name = $row['building_name'];
+        }
+    }
+    $abc = strval($email);
+    $mail = str_replace( array("@", "."), '', $abc);
+    $tenantrec = $mail."_".$b_name;
+    $tenantrec = strtolower($tenantrec);
+
+    $flag=0;
+    $j=1;  
+?>
+</head>
+<body><br><br><br><br>  
+    <div class="t_head" style="font-family: candara;font-size: 2em;"><b>Remove tenants</b></div><br><br><br>  
+    <form method="post" action=""><br>
+        <pre>           Select the tenants to remove.</pre>
+        <div class="opt" style="padding-left: 150px;">
+        <div><input type="checkbox" id="vehicle1" name="vehicle1" value="">
+        <label for="vehicle1" id="o1"></label></div>
+        <div><input type="checkbox" id="vehicle2" name="vehicle2" value="">
+        <label for="vehicle1" id="o2"></label></div>
+        <div><input type="checkbox" id="vehicle3" name="vehicle3" value="">
+        <label for="vehicle1" id="o3"></label></div>
+        <div><input type="checkbox" id="vehicle4" name="vehicle4" value="">
+        <label for="vehicle1" id="o4"></label></div>
+        <div><input type="checkbox" id="vehicle5" name="vehicle5" value="">
+        <label for="vehicle1" id="o5"></label></div>
+        <div><input type="checkbox" id="vehicle6" name="vehicle6" value="">
+        <label for="vehicle1" id="o6"></label></div>
+        <div><input type="checkbox" id="vehicle7" name="vehicle7" value="">
+        <label for="vehicle1" id="o7"></label></div>
+        <div><input type="checkbox" id="vehicle8" name="vehicle8" value="">
+        <label for="vehicle1" id="o8"></label></div>
+        <div><input type="checkbox" id="vehicle9" name="vehicle9" value="">
+        <label for="vehicle1" id="o9"></label></div>
+        <div><input type="checkbox" id="vehicle10" name="vehicle10" value="">
+        <label for="vehicle1" id="o10"></label></div>
+        <div> <input type="button" onclick='selectall()' value="SelectAll" id="select1">  </div></div><br>
+        <input type="submit" value="Submit" name="SubmitButton" id="submit_btn"><br><br>
+    </form>
+<?php
+$sql = "show tables";
+if ($result = mysqli_query($conn, $sql)) {
+while($row = mysqli_fetch_assoc($result)) {
+    if($row["Tables_in_tmsdata"]===$tenantrec){
+      // echo $row["Tables_in_tmsdata"]; 
+       $flag=1;
+       break;
+    }
+}
+while ( $j<11 ){
+    echo "<script>document.getElementById('vehicle$j').style.display = 'none';</script>";       
+    $j++;
+}
+if($flag!=0){
+    $sql = "SELECT * FROM $tenantrec";
+    $result = mysqli_query($conn, $sql);
+    $i=1;
+    while($row = mysqli_fetch_assoc($result)) {
+        $tname = $row['tname'];
+        $rent = $row['rent'];
+        $rname = $row['rname'];
+        $date = $row['moveindate'];
+        $newDate = date("d-m-Y", strtotime($date));
+        $mob = $row['mob'];
+        $aadhar = $row['aadhar'];
+        echo "<script>document.getElementById('o$i').value = '$rname';</script>";
+        echo "<script>document.getElementById('vehicle$i').value = '$rname';</script>";
+        echo "<script>document.getElementById('o$i').innerHTML = 'Name : $tname <span>_</span> Room : $rname';</script>";
+        echo "<script>document.getElementById('vehicle$i').style.display = 'unset';</script>";
+        $i++;
+    }
+}
+}
+?>
+<script>
+     function selectall(){  
+        var arr = ["vehicle1", "vehicle2", "vehicle3", "vehicle4", "vehicle5","vehicle6", "vehicle7", "vehicle8", "vehicle9", "vehicle10"];
+        for (var i = 0; i < arr.length; i++) {
+            var ele=document.getElementsByName(arr[i]);
+            for(var j=0; j<ele.length; j++){  
+                    if(ele[j].type=='checkbox')  
+                        ele[j].checked=true;  
+            }  
+        }
+        var ele=document.getElementsByName('vehicle1');  
+                for(var i=0; i<ele.length; i++){  
+                    if(ele[i].type=='checkbox')  
+                        ele[i].checked=true;  
+                }  
+            }  
+</script>
+<style>
+    input[type=checkbox]{
+        width: 5%;
+    }
+    span{
+        visibility: hidden;
+    }
+    .opt{
+        display: grid;
+    }
+    #submit_btn{
+        margin-left: 297px;
+    }
+    #select1{
+        position: relative;
+        top: 6px;
+        /* left: 2.5cm; */
+        cursor: pointer;
+    }
+    body{
+        background-color: #1f48af2f;
+            font-family: candara;
+        }
+    form{
+        color: white;
+        border: 1px solid white;
+        background-color: #002a52f3;
+        width: 60%;
+        margin: auto;
+    }
+    .t_head{
+        text-align: center;
+        color: #002a52f3;
+    }
+
+    input{
+	width: 7cm;
+	height: 19px;
+	border: 1px solid #53b1bd5e;
+	font-family: sans-serif;
+	color: black;
+}
+input[type=submit]{
+	height: 0.8cm;
+	font-family: "Segoe UI";
+	font-weight: bolder;
+	font-size: 17px;
+	color: black;
+    cursor: pointer;
+
+}
+input[type=submit]:focus{
+	background-image: linear-gradient(#53b1bd5e, skyblue);
+	color: black;
+	text-shadow: 0 0 3px grey;
+}
+input[type=submit]:hover{
+	border-color: skyblue;
+}
+</style>
+<?php
+error_reporting(0);
+    $message = "";
+    if(isset($_POST['SubmitButton'])){ 
+        $a1 = $_POST['vehicle1'];
+        $a2 = $_POST['vehicle2'];
+        $a3 = $_POST['vehicle3'];
+        $a4 = $_POST['vehicle4'];
+        $a5 = $_POST['vehicle5'];
+        $a6 = $_POST['vehicle6'];
+        $a7 = $_POST['vehicle7'];
+        $a8 = $_POST['vehicle8'];
+        $a9 = $_POST['vehicle9'];
+        $a10 = $_POST['vehicle10'];
+        include_once 'db.php';
+        $sql = "DELETE FROM $tenantrec WHERE `rname`='$a1' OR `rname`='$a2' OR `rname`='$a3' OR `rname`='$a4' OR `rname`='$a4' OR `rname`='$a5' OR `rname`='$a6' OR `rname`='$a7' OR `rname`='$a8' OR `rname`='$a9' OR `rname`='$a10'";
+        if (mysqli_query($conn, $sql)) {
+            echo "<script>setTimeout(\"location.href = 'http://localhost/tms/managetenant.html';\",1);</script>";
+        }
+    }
+?> 
+</body>
+</html>

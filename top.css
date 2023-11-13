@@ -1,0 +1,60 @@
+.o_name{
+    background-color: #002a52f3;
+    color: white;
+    border: 1px solid;
+    width: 87%;
+    text-align: center;
+    font-size: 5em;
+    margin: auto;
+}
+#logout_btn{
+    position: fixed;
+    left: 87%;
+    bottom: 91%;
+    cursor: pointer;
+    border: 1px solid;
+    width: 6%;
+    height: 4%;
+    background: transparent;
+    font-size: 1em;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+#logout_btn:hover{
+    border: 1px solid rgb(150, 51, 51);
+    
+}
+#logout_btn:active{
+    border: 2px solid rgb(150, 51, 51);
+    color: rgb(150, 51, 51);
+}
+#home_btn{
+    position: fixed;
+    left: 80.75%;
+    bottom: 91%;
+    cursor: pointer;
+    border: 1px solid;
+    width: 6%;
+    height: 4%;
+    background: transparent;
+    font-size: 1em;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+#home_btn:hover{
+    border: 1px solid rgb(32, 118, 122);
+    
+}
+#home_btn:active{
+    border: 2px solid rgb(32, 118, 122);
+    color: rgb(32, 118, 122);
+}
+#back_btn{
+    position: fixed;
+    left: 7%;
+    bottom: 91%;
+    cursor: pointer;
+    width: 2%;
+    height: 1.8%;
+    border: 1px solid ;
+            padding: 5px 10px 5px 10px;
+
+}

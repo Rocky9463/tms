@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tenant management system</title>
+    <?php  
+    error_reporting(0);
+        session_start();
+        $email = $_SESSION['email1'];
+        if(!$_SESSION['email1']){
+            header('Location: indexlog.html');
+        }
+    ?>
+</head>
+<body><br><br><br><br>
+    <div class="t_head" style="font-family: candara;font-size: 2em;"><b>Edit tenant details</b></div><br><br><br>
+    <form method="post" action=""><br>
+        <label for="tname" id="label_txt">Enter tenant name<span style="color: red;">*</span></label><input type="text" id="tname" name="tname" required pattern="[a-zA-Z]*\s?[a-zA-Z]+\s?[a-zA-Z]+" oninvalid="this.setCustomValidity('Please do not use special characters or numbers')" oninput="setCustomValidity('')"><br><br>
+        <label for="rname" id="label_txt">Enter rooms name*</label>
+        <select id="rname" name="rname" required> </select><br><br>
+        <label for="rent" id="label_txt">Enter rent<span style="color: red;">*</span></label><input type="number" id="rent" min=0 name="rent" required><br><br>
+        <label for="mob" id="label_txt">Enter mobile number</label><input type="tel" id="mob" name="mob" value="" pattern="[6789]{1}[0-9]{9}" oninvalid="this.setCustomValidity('Please Enter valid number')" oninput="setCustomValidity('')"><br><br>
+        <label for="date" id="label_txt">Enter move-in date<span style="color: red;">*</span></label><input type="date" id="date" name="date" min="2017-01-01" max="2024-03-27" required><br><br>
+        <label for="aadhar" id="label_txt">Enter aadhar number</label><input type="tel" id="aadhar" value="" name="aadhar" oninvalid="this.setCustomValidity('Please Enter valid number')" oninput="setCustomValidity('')" pattern="[0-9]{4}[0-9]{4}[0-9]{4}" ><br><br>
+        <input type="submit" value="Submit" name="SubmitButton"><br><br>
+    </form>
+
+    <style>
+        body{
+            background-color: #1f48af2f;
+            }
+        #label_txt{
+            font-family: candara;
+            position: relative;
+            left: -40px;
+        }
+        input{
+            width: 40%;
+            position: relative;
+            left: 50px;
+        }
+        #aadhar{
+            position: relative;
+            left: 45px;
+        }
+        #date{
+            position: relative;
+            left: 49px;
+            text-align: center;
+        }
+        #mob{
+            position: relative;
+            left: 46px;
+        }
+        #rent{
+            position: relative;
+            left: 79px;
+        }
+        #roomname{
+            position: relative;
+            left: 20px;
+        }
+        #tname{
+            position: relative;
+            left: 50px;
+        }
+        form{
+            color: white;
+            border: 1px solid white;
+            background-color: #002a52f3;
+            text-align: center;
+            width: 60%;
+            margin: auto;    
+        }
+        .t_head{
+            text-align: center;
+            color: #002a52f3;
+        }
+        select{
+            width: 7.16cm;
+    	    height: 19px;
+    	    border: 1px solid #53b1bd5e;
+    	    text-align: center;
+    	    font-family: sans-serif;
+    	    color: black;
+            margin-left: 5%;
+            margin-right: -7%;
+        }
+        input:invalid{
+            color: red;
+        }
+        input:valid{
+            color: rgb(0, 85, 0);
+        }
+        input{
+    	    width: 7cm;
+    	    height: 19px;
+            font-size: large;
+    	    border: 1px solid white;
+    	    text-align: center;
+    	    font-family: sans-serif;
+    	    color: black;
+        }
+        input[type=submit]{
+        	height: 0.8cm;
+        	font-family: "Segoe UI";
+        	font-weight: bolder;
+        	font-size: 17px;
+        	color: black; 
+        }
+        input:focus{
+        	outline: none;
+        	border-color: skyblue;
+        }
+        input[type=submit]:focus{
+        	background-image: linear-gradient(#53b1bd5e, skyblue);
+        	color: black;
+        	text-shadow: 0 0 3px grey;
+        }
+        input[type=submit]:hover{
+        	border-color: skyblue;
+        }
+    </style>
+
+    <?php
+        include_once 'db.php';
+        $sql = "SELECT * FROM building_details WHERE email = '$email'";
+        $result = mysqli_query($conn, $sql);
+        while($row = mysqli_fetch_assoc($result)) {
+            if($row['email']==$email){
+                $b_name = $row['building_name'];
+            }
+        }
+        $abc = strval($email);
+        $mail = str_replace( array("@", "."), '', $abc);
+        $tenantrec = $mail."_".$b_name;
+        $tenantrec = strtolower($tenantrec);
+        $flag=0;
+        $sql = "show tables";
+        if ($result = mysqli_query($conn, $sql)) {
+            while($row = mysqli_fetch_assoc($result)) {
+                if($row["Tables_in_tmsdata"]===$tenantrec){
+                  // echo $row["Tables_in_tmsdata"]; 
+                   $flag=1;
+                   break;
+                }
+            }
+            if($flag!=0){
+                $sql = "SELECT * FROM $tenantrec";
+                $result = mysqli_query($conn, $sql);
+                $i=1;
+                while($row = mysqli_fetch_assoc($result)) {
+                    $tname = $row['tname'];
+                    $rent = $row['rent'];
+                    $rname = $row['rname'];
+                    $date = $row['moveindate'];
+                    $newDate = date("d-m-Y", strtotime($date));
+                    $mob = $row['mob'];
+                    $aadhar = $row['aadhar'];
+                    echo "<script>
+                                var x = document.getElementById('rname');
+                                var option = document.createElement('option');
+                                option.text = '$rname';
+                                option.value = '$rname';
+                                x.add(option);
+                        </script>";
+                    $i++;
+                }
+            }
+        }
+
+        $message = "";
+        if(isset($_POST['SubmitButton'])){ 
+            $tname = $_POST['tname'];
+            $rname = $_POST['rname'];
+            $rent = $_POST['rent'];
+            $mob = $_POST['mob'];
+            $date = $_POST['date'];
+            $aadhar = $_POST['aadhar'];
+            include_once 'db.php';
+            if ($aadhar == '' && $mob == ''){
+                echo "Both are empty";
+                $sql = "UPDATE `$tenantrec` SET `rent`='$rent',`tname`='$tname',`moveindate`='$date' WHERE `rname` = '$rname'";
+                if (mysqli_query($conn, $sql)) {
+                    echo "<script>setTimeout(\"location.href = 'http://localhost/tms/managetenant.html';\",1);</script>";
+                    exit();
+                }else{
+                    echo "Error updating record: " . mysqli_error($conn);
+                }
+            }else{
+                if ($mob == ''){
+                    echo "mob is empyt";
+                    $sql = "UPDATE `$tenantrec` SET `rent`='$rent',`tname`='$tname',`moveindate`='$date',`aadhar`='$aadhar' WHERE `rname` = '$rname'";
+                    if (mysqli_query($conn, $sql)) {
+                        echo "<script>setTimeout(\"location.href = 'http://localhost/tms/managetenant.html';\",1);</script>";
+                        exit();
+                      } else {
+                        echo "Error updating record: " . mysqli_error($conn);
+                      }
+                }elseif ($aadhar == ''){
+                    echo "aadhar is empty";
+                    $sql = "UPDATE `$tenantrec` SET `rent`='$rent',`tname`='$tname',`mob`='$mob',`moveindate`='$date' WHERE `rname` = '$rname'";
+                    if (mysqli_query($conn, $sql)) {
+                        echo "<script>setTimeout(\"location.href = 'http://localhost/tms/managetenant.html';\",1);</script>";
+                        exit();
+                      } else {
+                        echo "Error updating record: " . mysqli_error($conn);
+                      }
+                }else{
+                    echo "nothing is empty;";
+                    $sql = "UPDATE `$tenantrec` SET `rent`='$rent',`tname`='$tname',`mob`='$mob',`moveindate`='$date',`aadhar`='$aadhar' WHERE `rname` = '$rname'";
+                    if (mysqli_query($conn, $sql)) {
+                        echo "<script>setTimeout(\"location.href = 'http://localhost/tms/managetenant.html';\",1);</script>";
+                        exit();
+                      } else {
+                        echo "Error updating record: " . mysqli_error($conn);
+                      }
+                }
+            }
+        }
+    ?> 
+</body>
+</html>

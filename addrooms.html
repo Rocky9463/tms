@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tenant management system</title>
+</head>
+<?php
+    session_start();
+    $email = $_SESSION['email1'];
+	if(!$_SESSION['email1']){
+        header('Location: indexlog.html');
+    }
+    include_once 'db.php';
+        $sql = "SELECT * FROM building_details WHERE email = '$email'";
+        $result = mysqli_query($conn, $sql);
+        while($row = mysqli_fetch_assoc($result)) {
+            if($row["email"]==$email){
+                $b_name = $row["building_name"];
+            }
+        }
+?>
+<body><br><br><br>
+    <div class="main-body">
+		<h1 align="center" style="font-family: 'Candara'; color: #002a52f3;">Building details</h1><br><br><br>
+		<div class="details" align="center"> 
+			<div class="white-background"></div>
+			<div class="details-text">
+				Building name<span style="color:red;">*</span><br><br>
+				No. of rooms<span style="color:red;">*</span><br><br>
+				Mobile no.<br><br>
+				Address<br><br><br><br><br>
+			</div>
+			<form action="addflag.php" method="post">
+				<div class="details-box">
+					<input type="text" id="db1" name="building_name" value="<?php echo $b_name; ?>" required pattern="[a-zA-Z_]+" oninvalid="this.setCustomValidity('Please do not use special characters or numbers')" oninput="setCustomValidity('')"><br>
+				 	<input type="number" min="1" max="10" id="db2" name="rooms" oninvalid="this.setCustomValidity('In free version, you cannot add more than 10 rooms')" oninput="setCustomValidity('')" required><br>
+					<input type="tel" id="db3" pattern="[6789]{1}[0-9]{9}" oninvalid="this.setCustomValidity('Please Enter valid number')" oninput="setCustomValidity('')" name="o_number" ><br>
+				 	<input type="text" id="db4" name="o_address" pattern="[a-zA-Z0-9/,.- ]+" oninvalid="this.setCustomValidity('Please do not use special characters')" oninput="setCustomValidity('')"><br><br>
+				</div>
+				<input type="submit" id="submitbtn" name="submit" value="Submit">
+			</form>
+		</div>
+		<span style="position: relative; left: 17%; color: rgb(236, 75, 75);">Do not use special characters in building name or address.</span> 
+	</div>
+</body>
+</html>
+
+<style>
+    body{
+		background-color: #1f48af2f;
+		overflow: hidden;    }
+	.main-body{
+		width: 90%;
+	}
+	input:invalid{
+            color: red;
+        }
+        input:valid{
+            color: rgb(0, 85, 0);
+        }
+	.white-background{
+		background-color: #002a52f3;
+		border: 1px solid white;
+		color: white;
+		position: relative;
+		left: 2%;
+		bottom: 0.6cm;
+		width: 70%;
+		height: 6.5cm;
+
+	}
+	.details{
+		height: 300px;
+		color: white;
+	}
+	form{
+		height: 50px;
+	}
+	#note1{
+		position: relative;
+		bottom: 25px;
+		font-family: serif;
+		font-size: 13px;
+	}
+	h4{
+		color: red;
+	}
+	.details-text{
+		text-align: right;
+	    padding-right: 18cm;
+	    position: relative;
+	    bottom: 6.1cm;
+	    font-family: sans-serif;
+	    font-size: 16px;
+	}
+	.details-box{
+		position: relative;
+		bottom: 0cm;
+		left: 3cm;
+		height: 0px;
+	}
+	#db1{
+		position: relative;
+		bottom: 0.6cm;
+	}
+	#db2{
+		position: relative;
+		bottom: 0.25cm;
+	}
+	#db3{
+		position: relative;
+		top: 0.1cm;
+	}
+	#db4{
+		position: relative;
+		top: 0.4cm;
+	}
+	input{
+		font-size: large;
+		width: 7cm;
+		height: 19px;
+		border: 1px solid #53b1bd5e;
+		text-align: center;
+		font-family: sans-serif;
+		color: black;
+	}
+	input[type=submit]{
+		position: relative;
+		top: 3.5cm;
+		height: 0.8cm;
+		font-family: "Segoe UI";
+		font-weight: bolder;
+		font-size: 17px;
+		color: black;
+		margin: 0 0 0 0;
+		padding: 0 0 0 0;
+	}
+	
+	input:focus{
+		outline: none;
+		border-color: skyblue;
+	}
+	input[type=submit]:focus{
+		background-image: linear-gradient(#53b1bd5e, skyblue);
+		color: black;
+		text-shadow: 0 0 3px grey;
+	
+	}
+	input[type=submit]:hover{
+		border-color: skyblue;
+	}
+	form{
+		position: relative;
+		bottom: 10.899cm;
+	}
+</style>

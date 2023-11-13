@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tenant management system</title>
+    <link rel="stylesheet" href="top.css">
+    <style>    #d1, #d2, #d3, #d4, #d5, #d6, #d7, #d8, #d9, #d10{
+        display: none;
+    }</style>
+</head>
+<body>
+    <br><br><br>
+    <div class="o_name">
+        Rent
+    </div><br><br>
+<?php
+    error_reporting(0);
+    session_start();
+    $email = $_SESSION['email1'];
+    if(!$_SESSION['email1']){
+        header('Location: indexlog.html');
+    }
+    include_once 'db.php';
+        $sql = "SELECT * FROM building_details WHERE email = '$email'";
+        $result = mysqli_query($conn, $sql);
+        while($row = mysqli_fetch_assoc($result)) {
+            if($row["email"]==$email){
+                $no_rooms = $row["no_of_rooms"];
+            }
+        }       
+?>
+<!-- PERMANENT HTML-->
+<div class="permain">
+    <details id="d1" open>
+            <summary id="s1" onclick="perclicked(id)"><span id="tname1">Add Tenant</span>   <span id="total1"></span></summary>
+            <p id="ans">
+                <a href="addtenant.html">
+                <img src="images/add.png" height="10px" id="button_image"></a>
+                <form method="POST" action="">
+                <span id="hid" style="display:none;"><input type="text" min="0" name="t_name" id="t_name1" > <input type="text" min="0" name="r_name" id="r_name1" ></span>
+                <span id="pos1"><label for="rent">Rent</label><input type="number" min="0" name="rent" required  max="1000000000" id="rent1" ></span><br>
+                <span id="pos2"><label for="start_date">Start date</label><input type="date" name="start_date" id="start_date1" value=""></span><br>
+                <span id="pos3"><label for="end_date">End date</label><input type="date" name="end_date" id="end_date1"></span><br>
+                <span id="pos4"><label for="bill">Bill</label><input type="number" min="0" name="bill" max="1000000000" required id="bill1" placeholder="aggregate of bills"  value="0" ></span><br>
+                <span id="pos5"><label for="paid">Paid</label><input type="number" min="0" name="paid" max="1000000000" id="paid1" placeholder="Amount paid" onfocusout="balCount(id)"></span><br>
+                <span id="pos6"><label for="bal">Balance</label><input type="tel" name="bal" onclick="alert('Balance amount will be calculated automatically')" readonly id="bal1" placeholder="Balance amount"></span><br>
+                <input type="submit" value="save" name="submit" id="submit1" onclick="subday(id)">
+            </form>
+            </p> 
+    </details>
+    <details id="d2"   open>
+        <summary id="s2" onclick="perclicked(id)"><span id="tname2">Add Tenant</span><span id="total2"></span></summary>
+        <p id="ans">
+            <a href="addtenant.html">
+            <img src="images/add.png" height="10px" id="button_image"></a>
+    <form method="POST" action="">
+    <span id="hid" style="display:none;"><input type="text" min="0" name="t_name" id="t_name2" > <input type="text" min="0" name="r_name" id="r_name2" ></span>
+            <span id="pos1"><label for="rent">Rent</label><input type="number" min="0" name="rent" required  max="1000000000" id="rent2" ></span><br>
+            <span id="pos2"><label for="start_date">Start date</label><input type="date" name="start_date" id="start_date2"></span><br>
+            <span id="pos3"><label for="end_date">End date</label><input type="date" name="end_date" id="end_date2"></span><br>
+            <span id="pos4"><label for="bill">Bill</label><input type="number" min="0" name="bill" max="1000000000" required id="bill2" placeholder="aggregate of bills" value="0"></span><br>
+            <span id="pos5"><label for="paid">Paid</label><input type="number" min="0" name="paid" max="1000000000" id="paid2" placeholder="Amount paid" onfocusout="balCount(id)"></span><br>
+            <span id="pos6"><label for="bal">Balance</label><input type="tel" name="bal" onclick="alert('Balance amount will be calculated automatically')" readonly id="bal2" placeholder="Balance amount"></span><br>
+            <input type="submit" value="save" name="submit" id="submit2" onclick="subday(id)"></form>
+        </p>
+    </details>
+    <details id="d3">
+            <summary id="s3" onclick="perclicked(id)"><span id="tname3">Add Tenant</span><span id="total3"></span></summary>
+            <p id="ans">
+                <a href="addtenant.html">
+                <img src="images/add.png" height="10px" id="button_image"></a>
+<form method="POST" action="">
+<span id="hid" style="display:none;"><input type="text" min="0" name="t_name" id="t_name3" > <input type="text" min="0" name="r_name" id="r_name3" ></span>
+                <span id="pos1"><label for="rent">Rent</label><input type="number" min="0" name="rent" required  max="1000000000" id="rent3" ></span><br>
+                <span id="pos2"><label for="start_date">Start date</label><input type="date" name="start_date" id="start_date3"></span><br>
+                <span id="pos3"><label for="end_date">End date</label><input type="date" name="end_date" id="end_date3"></span><br>
+                <span id="pos4"><label for="bill">Bill</label><input type="number" min="0" name="bill" max="1000000000" required id="bill3" placeholder="aggregate of bills"  value="0"></span><br>
+                <span id="pos5"><label for="paid">Paid</label><input type="number" min="0" name="paid" max="1000000000" id="paid3" placeholder="Amount paid" onfocusout="balCount(id)"></span><br>
+                <span id="pos6"><label for="bal">Balance</label><input type="tel" name="bal" onclick="alert('Balance amount will be calculated automatically')" readonly id="bal3" placeholder="Balance amount"></span><br>
+                <input type="submit" value="save" name="submit" id="submit3"></form>
+            </p> 
+    </details>
+    <details id="d4" >
+        <summary id="s4" onclick="perclicked(id)"><span id="tname4">Add Tenant</span><span id="total4"></span></summary>
+        <p id="ans">
+            <a href="addtenant.html">
+            <img src="images/add.png" height="10px" id="button_image"></a>
+<form method="POST" action="">
+<span id="hid" style="display:none;"><input type="text" min="0" name="t_name" id="t_name4" > <input type="text" min="0" name="r_name" id="r_name4" ></span>
+            <span id="pos1"><label for="rent">Rent</label><input type="number" min="0" name="rent" required  max="1000000000" id="rent4" ></span><br>
+            <span id="pos2"><label for="start_date">Start date</label><input type="date" name="start_date" id="start_date4"></span><br>
+            <span id="pos3"><label for="end_date">End date</label><input type="date" name="end_date" id="end_date4"></span><br>
+            <span id="pos4"><label for="bill">Bill</label><input type="number" min="0" name="bill" max="1000000000" required id="bill4" placeholder="aggregate of bills"  value="0"></span><br>
+            <span id="pos5"><label for="paid">Paid</label><input type="number" min="0" name="paid" max="1000000000" id="paid4" placeholder="Amount paid" onfocusout="balCount(id)"></span><br>
+            <span id="pos6"><label for="bal">Balance</label><input type="tel" name="bal" onclick="alert('Balance amount will be calculated automatically')" readonly id="bal4" placeholder="Balance amount"></span><br>
+            <input type="submit" value="save" name="submit" id="submit4"></form>
+        </p> 
+    </details>
+    <details id="d5" >
+        <summary id="s5" onclick="perclicked(id)"><span id="tname5">Add Tenant</span>   <span id="total5"></span></summary>
+        <p id="ans">
+            <a href="addtenant.html">
+            <img src="images/add.png" height="10px" id="button_image"></a>
+    <form method="POST" action="">
+    <span id="hid" style="display:none;"><input type="text" min="0" name="t_name" id="t_name5" > <input type="text" min="0" name="r_name" id="r_name5" ></span>
+            <span id="pos1"><label for="rent">Rent</label><input type="number" min="0" name="rent" required  max="1000000000" id="rent5" ></span><br>
+            <span id="pos2"><label for="start_date">Start date</label><input type="date" name="start_date" id="start_date5"></span><br>
+            <span id="pos3"><label for="end_date">End date</label><input type="date" name="end_date" id="end_date5"></span><br>
+            <span id="pos4"><label for="bill">Bill</label><input type="number" min="0" name="bill" max="1000000000" required id="bill5" placeholder="aggregate of bills"  value="0"></span><br>
+            <span id="pos5"><label for="paid">Paid</label><input type="number" min="0" name="paid" max="1000000000" id="paid5" placeholder="Amount paid" onfocusout="balCount(id)"></span><br>
+            <span id="pos6"><label for="bal">Balance</label><input type="tel" name="bal" onclick="alert('Balance amount will be calculated automatically')" readonly id="bal5" placeholder="Balance amount"></span><br>
+            <input type="submit" value="save" name="submit" id="submit5"></form>     
+        </p> 
+    </details>
+    <details id="d6" >
+        <summary id="s6" onclick="perclicked(id)"><span id="tname6">Add Tenant</span>   <span id="total6"></span></summary>
+        <p id="ans">
+            <a href="addtenant.html">
+            <img src="images/add.png" height="10px" id="button_image"></a>
+<form method="POST" action="">
+<span id="hid" style="display:none;"><input type="text" min="0" name="t_name" id="t_name6" > <input type="text" min="0" name="r_name" id="r_name6" ></span>
+            <span id="pos1"><label for="rent">Rent</label><input type="number" min="0" name="rent" required  max="1000000000" id="rent6" ></span><br>
+            <span id="pos2"><label for="start_date">Start date</label><input type="date" name="start_date" id="start_date6"></span><br>
+            <span id="pos3"><label for="end_date">End date</label><input type="date" name="end_date" id="end_date6"></span><br>
+            <span id="pos4"><label for="bill">Bill</label><input type="number" min="0" name="bill" max="1000000000" required id="bill6" placeholder="aggregate of bills"  value="0"></span><br>
+            <span id="pos5"><label for="paid">Paid</label><input type="number" min="0" name="paid" max="1000000000" id="paid6" placeholder="Amount paid" onfocusout="balCount(id)"></span><br>
+            <span id="pos6"><label for="bal">Balance</label><input type="tel" name="bal" onclick="alert('Balance amount will be calculated automatically')" readonly id="bal6" placeholder="Balance amount"></span><br>
+            <input type="submit" value="save" name="submit" id="submit6"></form>
+        </p> 
+    </details>
+    <details id="d7" >
+        <summary id="s7" onclick="perclicked(id)"><span id="tname7">Add Tenant</span>   <span id="total7"></span></summary>
+        <p id="ans">
+            <a href="addtenant.html">
+            <img src="images/add.png" height="10px" id="button_image"></a>
+<form method="POST" action="">
+<span id="hid" style="display:none;"><input type="text" min="0" name="t_name" id="t_name7" > <input type="text" min="0" name="r_name" id="r_name7" ></span>
+            <span id="pos1"><label for="rent">Rent</label><input type="number" min="0" name="rent" required  max="1000000000" id="rent7" ></span><br>
+            <span id="pos2"><label for="start_date">Start date</label><input type="date" name="start_date" id="start_date7"></span><br>
+            <span id="pos3"><label for="end_date">End date</label><input type="date" name="end_date" id="end_date7"></span><br>
+            <span id="pos4"><label for="bill">Bill</label><input type="number" min="0" name="bill" max="1000000000" required id="bill7" placeholder="aggregate of bills"  value="0"></span><br>
+            <span id="pos5"><label for="paid">Paid</label><input type="number" min="0" name="paid" max="1000000000" id="paid7" placeholder="Amount paid" onfocusout="balCount(id)"></span><br>
+            <span id="pos6"><label for="bal">Balance</label><input type="tel" name="bal" onclick="alert('Balance amount will be calculated automatically')" readonly id="bal7" placeholder="Balance amount"></span><br>
+            <input type="submit" value="save" name="submit" id="submit7"></form>
+        </p> 
+    </details>
+    <details id="d8">
+        <summary id="s8" onclick="perclicked(id)"><span id="tname8">Add Tenant</span>   <span id="total8"></span></summary>
+        <p id="ans">
+            <a href="addtenant.html">
+            <img src="images/add.png" height="10px" id="button_image"></a>
+    <form method="POST" action=""> 
+    <span id="hid" style="display:none;"><input type="text" min="0" name="t_name" id="t_name8" > <input type="text" min="0" name="r_name" id="r_name8" ></span>
+            <span id="pos1"><label for="rent">Rent</label><input type="number" min="0" name="rent" required  max="1000000000" id="rent8" ></span><br>
+            <span id="pos2"><label for="start_date">Start date</label><input type="date" name="start_date" id="start_date8"></span><br>
+            <span id="pos3"><label for="end_date">End date</label><input type="date" name="end_date" id="end_date8"></span><br>
+            <span id="pos4"><label for="bill">Bill</label><input type="number" min="0" name="bill" max="1000000000" required id="bill8" placeholder="aggregate of bills"  value="0"></span><br>
+            <span id="pos5"><label for="paid">Paid</label><input type="number" min="0" name="paid" max="1000000000" id="paid8" placeholder="Amount paid" onfocusout="balCount(id)"></span><br>
+            <span id="pos6"><label for="bal">Balance</label><input type="tel" name="bal" onclick="alert('Balance amount will be calculated automatically')" readonly id="bal8" placeholder="Balance amount"></span><br>
+            <input type="submit" value="save" name="submit" id="submit8"></form>
+        </p> 
+    </details>
+    <details id="d9" >
+        <summary id="s9" onclick="perclicked(id)"><span id="tname9">Add Tenant</span>   <span id="total9"></span></summary>
+        <p id="ans">
+            <a href="addtenant.html">
+            <img src="images/add.png" height="10px" id="button_image"></a>
+    <form method="POST" action="">
+    <span id="hid" style="display:none;"><input type="text" min="0" name="t_name" id="t_name9" > <input type="text" min="0" name="r_name" id="r_name9" ></span>
+            <span id="pos1"><label for="rent">Rent</label><input type="number" min="0" name="rent" required  max="1000000000" id="rent9" ></span><br>
+            <span id="pos2"><label for="start_date">Start date</label><input type="date" name="start_date" id="start_date9"></span><br>
+            <span id="pos3"><label for="end_date">End date</label><input type="date" name="end_date" id="end_date9"></span><br>
+            <span id="pos4"><label for="bill">Bill</label><input type="number" min="0" name="bill" max="1000000000" required id="bill9" placeholder="aggregate of bills"  value="0"></span><br>
+            <span id="pos5"><label for="paid">Paid</label><input type="number" min="0" name="paid" max="1000000000" id="paid9" placeholder="Amount paid" onfocusout="balCount(id)"></span><br>
+            <span id="pos6"><label for="bal">Balance</label><input type="tel" name="bal" onclick="alert('Balance amount will be calculated automatically')" readonly id="bal9" placeholder="Balance amount"></span><br>
+            <input type="submit" value="save" name="submit" id="submit9"></form>
+        </p> 
+    </details>
+    <details id="d10" >
+        <summary id="s10" onclick="perclicked(id)"><span id="tname10">Add Tenant</span>   <span id="total10"></span></summary>
+        <p id="ans">
+            <a href="addtenant.html">
+            <img src="images/add.png" height="10px" id="button_image"></a>
+    <form method="POST" action="">  
+    <span id="hid" style="display:none;"><input type="text" min="0" name="t_name" id="t_name10" > <input type="text" min="0" name="r_name" id="r_name10" ></span>
+            <span id="pos1"><label for="rent">Rent</label><input type="number" min="0" name="rent" required  max="1000000000" id="rent10" ></span><br>
+            <span id="pos2"><label for="start_date">Start date</label><input type="date" name="start_date" id="start_date10"></span><br>
+            <span id="pos3"><label for="end_date">End date</label><input type="date" name="end_date" id="end_date10"></span><br>
+            <span id="pos4"><label for="bill">Bill</label><input type="number" min="0" name="bill" max="1000000000" required id="bill10" placeholder="aggregate of bills"  value="0"></span><br>
+            <span id="pos5"><label for="paid">Paid</label><input type="number" min="0" name="paid" max="1000000000" id="paid10" placeholder="Amount paid" onfocusout="balCount(id)"></span><br>
+            <span id="pos6"><label for="bal">Balance</label><input type="tel" name="bal" onclick="autoC()" readonly id="bal10" placeholder="Balance amount"></span><br>
+            <input type="submit" value="save" name="submit" id="submit10"></form>
+        </p> 
+    </details>
+</div>
+<!-- PERMANENT HTML ENDS-->
+<?php
+$start = date('Y-m-01');
+$end = date('Y-m-t');
+$sql = "SELECT * FROM building_details WHERE email = '$email'";
+    $result = mysqli_query($conn, $sql);
+    while($row = mysqli_fetch_assoc($result)) {
+        if($row['email']==$email){
+            $b_name = $row['building_name'];
+        }
+    }
+    $abc = strval($email);
+    $mail = str_replace( array("@", "."), '', $abc);
+    $tenantrec = $mail."_".$b_name;
+    $tenantrec = strtolower($tenantrec);
+    $rentrec = $tenantrec.'_rent';
+
+    $flag=0;
+    $sql = "show tables";
+    if ($result = mysqli_query($conn, $sql)) {
+    while($row = mysqli_fetch_assoc($result)) {
+        if($row["Tables_in_tmsdata"]===$tenantrec){
+          // echo $row["Tables_in_tmsdata"]; 
+           $flag=1;
+           break;
+        }
+    }}
+if($flag!=0){
+    $sql = "SELECT * FROM $tenantrec";
+    $result = mysqli_query($conn, $sql);
+    $i=1;
+    while($row = mysqli_fetch_assoc($result)) {
+        $tname = $row['tname'];
+        $rent = $row['rent'];
+        $rname = $row['rname'];
+        $date = $row['moveindate'];
+        $enddate = date('Y-m-d', strtotime('+1 month', strtotime($date)));
+        $newDate = date("d-m-Y", strtotime($date));
+        $mob = $row['mob'];
+        $aadhar = $row['aadhar'];
+        echo "<style>#d$i{display: unset;}</style>";
+        echo "<style>#d$i img{display: none;}</style>";
+        echo "<script>document.getElementById('start_date$i').value  = '$date';</script>";
+        echo "<script>document.getElementById('end_date$i').value  = '$enddate';</script>";
+        echo "<script>document.getElementById('tname$i').innerHTML = '$rname : $tname';</script>";
+        echo "<script>document.getElementById('total$i').innerHTML = 'Rent : ₹ $rent.00';</script>";
+        echo "<script>document.getElementById('rent$i').value = $rent;</script>";
+        echo "<style>#rent$i{opacity: 1;}</style>";
+        echo "<script>document.getElementById('rname$i').innerHTML = 'Rent : ₹ $rent';</script>";
+        echo "<script>document.getElementById('t_name$i').value = '$tname';</script>";
+        echo "<script>document.getElementById('r_name$i').value = '$rname';</script>";
+
+        $sql2 = "SELECT * FROM $rentrec";
+        $result2 = mysqli_query($conn, $sql2);
+        $c_month = date('m');
+        while($row = mysqli_fetch_assoc($result2)) {
+            $t_name1 = $row['tname'];
+            $rent = $row['rent'];
+            $r_name1 = $row['rname'];
+            $bill = $row['bills'];
+            $from_date = $row['from_date'];
+            $from_date = date("Y-m-d", strtotime($from_date));
+            $to_date = $row['to_date'];
+            $to_date = date("Y-m-d", strtotime($to_date));
+            $rent_month = $row['rent_month'];
+            $paid = $row['paid'];
+            $balance = $row['balance'];
+            if ($rname == $r_name1 && $rent_month == $c_month ){
+                echo "<script>document.getElementById('tname$i').innerHTML = '$r_name1 : $t_name1';</script>";
+                //echo "<script>document.getElementById('total$i').innerHTML = 'Total : ₹ $rent.00';</script>";
+                echo "<script>document.getElementById('rent$i').value = $rent;</script>";
+                echo "<script>document.getElementById('rname$i').innerHTML = 'Rent : ₹ $rent';</script>";
+                echo "<script>document.getElementById('bill$i').value = $bill;</script>";
+                echo "<script>document.getElementById('paid$i').value = $paid;</script>";
+                echo "<script>document.getElementById('bal$i').value = $balance;</script>";
+                echo "<script>document.getElementById('submit$i').value = 'Update';</script>";
+                echo "<script>document.getElementById('start_date$i').value  = '$from_date';</script>";
+                echo "<script>document.getElementById('end_date$i').value  = '$to_date';</script>";               
+            }
+        }
+        $i++;
+    }
+}
+if(isset($_POST['submit'])){ 
+        $rent = $_POST['rent'];
+        $t_name = $_POST['t_name'];
+        $r_name = $_POST['r_name'];
+        $startingdate = $_POST['start_date'];
+        $endingdate = $_POST['end_date'];
+        $bill = $_POST['bill'];
+        if (!$_POST['paid']){
+            $paid = 0;
+        }else{
+            $paid = $_POST['paid'];
+        }        
+        $c_month = date('m');
+        $bal = ($rent + $bill) - $paid;
+        if($_POST['submit']=='Update'){
+            $sql2 = "SELECT * FROM $rentrec";
+            $result2 = mysqli_query($conn, $sql2);
+            $flag1 = 0;
+            while($row = mysqli_fetch_assoc($result2)) {
+                $t_namea = $row['tname'];
+                $r_namea = $row['rname'];
+                $rent_montha = $row['rent_month'];
+                if ($r_name == $r_namea && $c_month == $rent_montha && $t_name == $t_namea){
+                    $billa = $row['bills'];
+                    $renta = $row['rent'];
+                    $f_datea = $row['from_date'];
+                    $f_datea = date("Y-m-d", strtotime($from_date));
+                    $t_datea = $row['to_date'];
+                    $t_datea = date("Y-m-d", strtotime($to_date));
+                    $totala = $row['total'];
+                    $paida = $row['paid'];
+                    $balancea = $row['balance'];
+                    if ($bill != $billa){
+                        $sql3 = "UPDATE $rentrec SET `bills`='$bill' WHERE `rname` = '$r_name'";
+                        mysqli_query($conn, $sql3);  
+                    }  
+                    if ($paid != $paida){
+                        $sql3 = "UPDATE $rentrec SET `paid`='$paid' WHERE `rname` = '$r_name'";
+                        mysqli_query($conn, $sql3);
+                    } 
+                    if ($bal != $balancea){
+                        $sql3 = "UPDATE $rentrec SET `balance`='$bal' WHERE `rname` = '$r_name'";
+                        mysqli_query($conn, $sql3);
+                    } 
+                    if ($startingdate != $f_datea || $startingdate == $start){
+                        $sql = "UPDATE $rentrec SET `from_date`='$startingdate' WHERE `rname` = '$r_name'";
+                        if(mysqli_query($conn, $sql)){
+                            echo "value inserted";
+                        }
+                    } 
+                    if ($endingdate != $t_datea || $endingdate == $end){
+                        $sql = "UPDATE $rentrec SET `to_date`='$endingdate' WHERE `rname` = '$r_name'";
+                        mysqli_query($conn, $sql);
+                    } 
+                    if ($rent != $renta){
+                        $sql3 = "UPDATE $rentrec SET `rent`='$rent' WHERE `rname` = '$r_name'";
+                        mysqli_query($conn, $sql3);
+                    }  
+                        $flag1 = 1;
+                    echo "<script>setTimeout(\"location.href = 'http://localhost/tms/managerent.html';\",1);</script>";
+                }
+                if ($flag1 == 1){
+                    break;
+                }
+            }
+        }else{
+            $sql = "SELECT * FROM $tenantrec where rname = '$r_name'";
+            $result12 = mysqli_query($conn, $sql);
+            while($row = mysqli_fetch_assoc($result12)) {
+                $date = $row['moveindate'];
+                $enddate = date('Y-m-d', strtotime('+1 month', strtotime($date)));
+            }
+            $sql = "INSERT INTO $rentrec (rname, tname, rent, bills, from_date, to_date, rent_month, paid, balance) VALUES ('$r_name', '$t_name', '$rent', $bill, '$date', '$enddate', '$c_month', '$paid', '$bal')"; 
+            if (mysqli_query($conn, $sql)) {
+                echo "<script>setTimeout(\"location.href = 'http://localhost/tms/managerent.html';\",1);</script>";
+            } else {
+                echo "Error: " . $sql . ":-" . mysqli_error($conn);
+            }
+            mysqli_close($conn);
+        }}
+?>
+<!-- PERMANENT JS -->
+<script>
+    function balCount(id){
+        let part = id.slice(-1);
+        if (part == 0){
+            part = 10;
+        }
+        let rentid = 'rent'+part;
+        let billid = 'bill'+part;
+        let balid = 'bal'+part;
+        let paidid = 'paid'+part;
+        var rent=(parseInt(document.getElementById(rentid).value)) || 0;
+        var bill = (parseInt(document.getElementById(billid).value)) || 0;
+        var paid = document.getElementById(paidid).value;
+        let balance = (rent+bill)-paid;
+        document.getElementById(balid).value = balance;     
+    }
+    function perclicked(a){ 
+        switch (a) { 
+            case "s1": 
+                document.getElementById("d2").toggleAttribute("open");
+                document.getElementById("d3").removeAttribute("open");
+                document.getElementById("d4").removeAttribute("open");
+                document.getElementById("d5").removeAttribute("open");
+                document.getElementById("d6").removeAttribute("open");
+                document.getElementById("d7").removeAttribute("open");
+                document.getElementById("d8").removeAttribute("open");
+                document.getElementById("d9").removeAttribute("open");
+                document.getElementById("d10").removeAttribute("open");
+                break;
+            case "s2":
+                document.getElementById("d1").toggleAttribute("open");
+                document.getElementById("d3").removeAttribute("open");
+                document.getElementById("d4").removeAttribute("open");
+                document.getElementById("d5").removeAttribute("open");
+                document.getElementById("d6").removeAttribute("open");
+                document.getElementById("d7").removeAttribute("open");
+                document.getElementById("d8").removeAttribute("open");
+                document.getElementById("d9").removeAttribute("open");
+                document.getElementById("d10").removeAttribute("open");             
+                break;
+            case "s3": 
+                 document.getElementById("d1").removeAttribute("open");
+                document.getElementById("d2").removeAttribute("open");
+                document.getElementById("d4").toggleAttribute("open");
+                document.getElementById("d5").removeAttribute("open");
+                document.getElementById("d6").removeAttribute("open");
+                document.getElementById("d7").removeAttribute("open");
+                document.getElementById("d8").removeAttribute("open");
+                document.getElementById("d9").removeAttribute("open");
+                document.getElementById("d10").removeAttribute("open");
+                break;
+            case "s4": 
+                document.getElementById("d1").removeAttribute("open");
+                document.getElementById("d2").removeAttribute("open");
+                document.getElementById("d3").toggleAttribute("open");
+                document.getElementById("d5").removeAttribute("open");
+                document.getElementById("d6").removeAttribute("open");
+                document.getElementById("d7").removeAttribute("open");
+                document.getElementById("d8").removeAttribute("open");
+                document.getElementById("d9").removeAttribute("open");
+                document.getElementById("d10").removeAttribute("open");
+                break;
+            case "s5": 
+                document.getElementById("d1").removeAttribute("open");
+                document.getElementById("d2").removeAttribute("open");
+                document.getElementById("d3").removeAttribute("open");
+                document.getElementById("d4").removeAttribute("open");
+                document.getElementById("d6").toggleAttribute("open");
+                document.getElementById("d7").removeAttribute("open");
+                document.getElementById("d8").removeAttribute("open");
+                document.getElementById("d9").removeAttribute("open");
+                document.getElementById("d10").removeAttribute("open");
+                break;
+            case "s6": 
+                document.getElementById("d1").removeAttribute("open");
+                document.getElementById("d2").removeAttribute("open");
+                document.getElementById("d3").removeAttribute("open");
+                document.getElementById("d4").removeAttribute("open");
+                document.getElementById("d5").toggleAttribute("open");
+                document.getElementById("d7").removeAttribute("open");
+                document.getElementById("d8").removeAttribute("open");
+                document.getElementById("d9").removeAttribute("open");
+                document.getElementById("d10").removeAttribute("open");
+                break;  
+            case "s7": 
+                document.getElementById("d1").removeAttribute("open");
+                document.getElementById("d2").removeAttribute("open");
+                document.getElementById("d3").removeAttribute("open");
+                document.getElementById("d4").removeAttribute("open");
+                document.getElementById("d5").removeAttribute("open");
+                document.getElementById("d6").removeAttribute("open");
+                document.getElementById("d8").toggleAttribute("open");
+                document.getElementById("d9").removeAttribute("open");
+                document.getElementById("d10").removeAttribute("open");
+                break;
+            case "s8": 
+                document.getElementById("d1").removeAttribute("open");
+                document.getElementById("d2").removeAttribute("open");
+                document.getElementById("d3").removeAttribute("open");
+                document.getElementById("d4").removeAttribute("open");
+                document.getElementById("d5").removeAttribute("open");
+                document.getElementById("d6").removeAttribute("open");
+                document.getElementById("d7").toggleAttribute("open");
+                document.getElementById("d9").removeAttribute("open");
+                document.getElementById("d10").removeAttribute("open");
+                break;
+            case "s9": 
+                document.getElementById("d1").removeAttribute("open");
+                document.getElementById("d2").removeAttribute("open");
+                document.getElementById("d3").removeAttribute("open");
+                document.getElementById("d4").removeAttribute("open");
+                document.getElementById("d5").removeAttribute("open");
+                document.getElementById("d6").removeAttribute("open");
+                document.getElementById("d7").removeAttribute("open");
+                document.getElementById("d8").removeAttribute("open");
+                document.getElementById("d10").toggleAttribute("open");
+                break;
+            case "s10": 
+                document.getElementById("d1").removeAttribute("open");
+                document.getElementById("d2").removeAttribute("open");
+                document.getElementById("d3").removeAttribute("open");
+                document.getElementById("d4").removeAttribute("open");
+                document.getElementById("d5").removeAttribute("open");
+                document.getElementById("d6").removeAttribute("open");
+                document.getElementById("d7").removeAttribute("open");
+                document.getElementById("d8").removeAttribute("open");
+                document.getElementById("d9").toggleAttribute("open");
+                break;  
+        }
+    }	 
+</script> 
+<style>
+    #pos1 input{
+        margin-right: -180%;
+        margin-left: 60%;
+    }
+    #pos2 input{
+        margin-right: -180%;
+        margin-left: 53.3%;
+        width: 3.7cm;
+    }
+    #pos3 input{
+        margin-right: -180%;
+        margin-left: 54.45%;
+        width: 3.7cm;
+    }
+    #pos4 input{
+        margin-right: -180%;
+        margin-left: 62%;
+        
+    }
+    #pos5 input{
+        margin-right: -180%;
+        margin-left: 60.5%;
+    }
+    #pos6 input{
+        color: rgb(0, 47, 61);
+        margin-right: -180%;
+        margin-left: 55.6%;
+    }
+    p{
+        display: inline-block;
+    }
+    form{
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    }
+    #heading{
+            font-family: MerriWeather;
+            font-size: 2em;
+            position: relative;
+            top: 2cm;
+    }
+    .permain{
+        text-align: center;
+        margin: auto;
+        display: flex;
+        flex-wrap: wrap;
+       
+    }
+    details {
+            border: 1px solid;
+            transition: all 0.4s ease;
+            overflow: auto;
+            text-align: left;
+            padding: 5px 0 5px 15px;
+            margin-bottom: 10px;
+            margin-left: 6.5%;
+            font-family: 'Outfit', sans-serif;
+            width: 39%;
+            
+    }  
+    details:not([open]) {
+            height: 0.5cm; 
+    }
+    details[open] { 
+            height: 218px;
+            overflow: hidden;
+    }
+    details summary {
+            cursor: pointer;
+            list-style: none;
+    }
+    details[open] summary {
+            font-weight: 600;
+    }  
+    #total1, #total2, #total3, #total4, #total5, #total6, #total7, #total8, #total9, #total10{
+        margin-right: 15px;
+        /*display : none;*/
+    }
+    summary{
+        display:flex;
+        justify-content: space-between;
+    }   
+    #button_image{
+        width: 15%;
+        height: 15%;
+        border: 2px solid grey;
+        border-radius: 5%;
+        cursor: pointer;
+        opacity: 0.9;
+    }     
+    #button_image:active{
+        opacity: 1;
+        width: 14.8%;
+    }  
+    input:invalid{
+        color: red;
+    }
+</style>
+<!--PERMANENT CSS ENDS-->
+
+<?php
+    for ($x = $no_rooms+1; $x <= 10; $x++) {
+        echo "<style>#d$x{display: none;}</style>";
+      } 
+
+?>
+<form method="post" action="logout.php">
+    <input type="submit" value="log out" name="SubmitButton" id="logout_btn">
+</form>
+<a href="owner_building.html"><button id="home_btn">Home</button></a>
+<a href="tenantpage.html"><img src="images/back2.png" id="back_btn"></a>
+</body>
+</html>
+<style>
+    body{
+        background-color: #1f48af2f;
+    }
+    #addroom_button{
+        position: fixed;
+        left: 26cm;
+        bottom: 0.8cm;
+        cursor: pointer;
+        border: 2px solid grey;
+        width: 10%;
+        height: 8%;
+        background: transparent;
+        border-radius: 5%;
+        font-size: 1em;
+        font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    }
+    #edittenant_button{
+        position: fixed;
+        left: 22cm;
+        bottom: 0.8cm;
+        cursor: pointer;
+        border: 2px solid grey;
+        width: 10%;
+        height: 8%;
+        background: transparent;
+        border-radius: 5%;
+        font-size: 1em;
+        font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    }
+    #deletetenant_button{
+        position: fixed;
+        left: 30cm;
+        bottom: 0.8cm;
+        cursor: pointer;
+        border: 2px solid grey;
+        width: 10%;
+        height: 8%;
+        background: transparent;
+        border-radius: 5%;
+        font-size: 1em;
+        font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    }
+    #addroom_button:hover, #edittenant_button:hover, #deletetenant_button:hover{
+        border: 2px solid;
+        
+    }
+    #addroom_button:active, #edittenant_button:active, #deletetenant_button:active{
+        border: 3px solid;
+        font-weight: bold;
+    }
+    a{
+        text-decoration: none;
+    }
+    input{
+        outline: none;
+    }
+    input[type='submit']{
+        cursor: pointer;
+        border: 2px solid grey;
+        width: 25%;
+        font-size: 1em;
+        font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    }
+    input[type='submit']:hover{
+        border: 2px solid;
+    }
+    input[type='submit']:active{
+        font-weight: bold;
+    }
+</style>

@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tenant management system</title>
+    <?php
+        session_start();
+    ?>
+</head>
+<body><br><br><br><br>
+    <div class="t_head" style="font-family: candara;font-size: 2em;"><b>Tenant details</b></div><br><br><br>
+    <form method="post" action=""><br>
+        <label for="tname" id="label_txt">Enter tenant name<span style="color: red;">*</span></label><input type="text" id="tname" name="tname" required minlength="2" maxlength="64" pattern="[a-zA-Z]*\s?[a-zA-Z]+\s?[a-zA-Z]+" oninvalid="this.setCustomValidity('Please do not use special characters or numbers')" oninput="setCustomValidity('')"><br><br>
+        <label for="rname" id="label_txt">Enter room name<span style="color: red;">* </span></label><input type="text" id="rname" name="rname" value="" oninvalid="this.setCustomValidity('Please enter unique room name without special characters')" oninput="setCustomValidity('')" required maxlength="25" pattern="[a-zA-Z0-9]+"><br><br>
+        <label for="rent" id="label_txt">Enter rent<span style="color: red;">*</span></label><input type="number" id="rent" min=0 name="rent" max="1000000000" required><br><br>
+        <label for="mob" id="label_txt">Enter mobile number</label><input type="tel" id="mob" name="mob" value="" pattern="[6789]{1}[0-9]{9}" oninvalid="this.setCustomValidity('Please Enter valid number')" oninput="setCustomValidity('')"><br><br>
+        <label for="date" id="label_txt">Enter move-in date<span style="color: red;">*</span></label><input type="date" id="date" name="date" min="2017-01-01" max="2024-03-27" required><br><br>
+        <label for="aadhar" id="label_txt">Enter aadhar number</label><input type="tel" id="aadhar" value="" name="aadhar" oninvalid="this.setCustomValidity('Please Enter valid number')" oninput="setCustomValidity('')" pattern="[0-9]{4}[0-9]{4}[0-9]{4}" ><br><br>
+        <input type="submit" value="Submit" name="SubmitButton"><br><br>
+    </form><br>
+    <pre style="color:red;">                                       Note : Room names should be unique.</pre>
+    <style>
+        body{
+            background-color: #1f48af2f;
+        }
+        #label_txt{
+            font-family: candara;
+            position: relative;
+            left: -40px;
+        }
+        input{
+            width: 40%;
+            position: relative;
+            left: 50px;
+        }
+        #aadhar{
+            position: relative;
+            left: 43px;
+        }
+        #date{
+            position: relative;
+            left: 46px;
+            text-align: center;
+        }
+        #mob{
+            position: relative;
+            left: 43px;
+        }
+        #rent{
+            position: relative;
+            left: 76px;
+        }
+        #tname{
+            position: relative;
+            left: 47px;
+        }
+        form{
+            color: white;
+            border: 1px solid white;
+            background-color: #002a52f3;
+            text-align: center;
+            width: 60%;
+            margin: auto; 
+        }
+        .t_head{
+            text-align: center;
+            color: #002a52f3;
+        }
+        input{
+    	width: 7cm;
+    	height: 19px;
+    	border: 1px solid #53b1bd5e;
+    	text-align: center;
+    	font-family: sans-serif;
+    	color: black;
+        font-size: large;
+        }
+        input:invalid{
+            color: red;
+        }
+        input:valid{
+            color: rgb(0, 85, 0);
+        }
+        input[type=submit]{
+        	height: 0.8cm;
+        	font-family: "Segoe UI";
+        	font-weight: bolder;
+        	font-size: 17px;
+        	color: black;
+        }
+        input:focus{
+        	outline: none;
+        	border-color: skyblue;
+        }
+        input[type=submit]:focus{
+        	background-image: linear-gradient(#53b1bd5e, skyblue);
+        	color: black;
+        	text-shadow: 0 0 3px grey;
+        }
+        input[type=submit]:hover{
+        	border-color: skyblue;
+        }
+    </style>
+<?php
+    error_reporting(0);
+    $email = $_SESSION['email1'];
+    include_once 'db.php';
+    $sql = "SELECT * FROM building_details WHERE email = '$email'";
+    $result = mysqli_query($conn, $sql);
+    while($row = mysqli_fetch_assoc($result)) {
+        if($row['email']==$email){
+            $b_name = $row['building_name'];
+        }
+    }
+
+    $abc = strval($email);
+    $mail = str_replace( array("@", "."), '', $abc);
+
+    $tenantrec = $mail."_".$b_name;
+    $tenantrec = strtolower($tenantrec);
+
+    $flag=0;
+    $sql = "show tables";
+    if ($result = mysqli_query($conn, $sql)) {
+    while($row = mysqli_fetch_assoc($result)) {
+        if($row["Tables_in_tmsdata"]===$tenantrec){
+          // echo $row["Tables_in_tmsdata"]; 
+           $flag=1;
+           break;
+        }
+    }
+    if($flag==0){
+        $sql = "CREATE TABLE $tenantrec (
+            rname VARCHAR(25) PRIMARY KEY,
+            rent INT(5) NOT NULL,
+            tname VARCHAR(64) NOT NULL,
+            mob BIGINT(11),
+            moveindate DATE,
+            aadhar BIGINT(16)
+            )";
+            if ($conn->query($sql) === TRUE) {
+                //echo "Table $tenantrec created successfully";
+            } else {
+                echo "Error creating table: " . $conn->error;
+            }
+        $rentrec = $tenantrec."_rent";
+        $sql2 = "CREATE TABLE $rentrec (
+            rname VARCHAR(25) PRIMARY KEY,
+            tname VARCHAR(64) NOT NULL,
+            rent INT(5) NOT NULL,            
+            bills INT(5),
+            from_date DATE,
+            to_date DATE,
+            rent_month INT(2) NOT NULL, 
+            total INT(6) NOT NULL,
+            paid INT(6),
+            balance INT(5)
+            )";
+            if ($conn->query($sql2) === TRUE) {
+                //echo "Table $tenantrec created successfully";
+            } else {
+                echo "Error creating table: " . $conn->error;
+            }
+    } 
+}
+?>
+<?php
+        $message = "";
+        if(isset($_POST['SubmitButton'])){ 
+            $tname = $_POST['tname'];
+            $rname = $_POST['rname'];
+            $rent = $_POST['rent'];
+            $mob = $_POST['mob'];
+            $date = $_POST['date'];
+            $aadhar = $_POST['aadhar'];
+            include_once 'db.php';
+
+            $sql_check = "SELECT * FROM $tenantrec";
+            $result = mysqli_query($conn, $sql_check);
+            while($row = mysqli_fetch_assoc($result)) {
+                $roomname = $row['rname'];
+                if($roomname == $rname){
+                    echo "<script>alert('Please enter unique room name.')</script>";
+                    exit;
+                }        
+            }
+            
+            $sql = "INSERT INTO `$tenantrec` (`rname`, `rent`, `tname`, `mob`, `moveindate`,`aadhar`) VALUES ('$rname','$rent','$tname','$mob','$date','$aadhar')";
+            if (mysqli_query($conn, $sql)) {
+                mysqli_close($conn);
+                echo "<script>setTimeout(\"location.href = 'http://localhost/tms/managetenant.html';\",1);</script>";
+                exit();
+            }else {
+                echo "Some problem occured"; 
+            }
+        }
+    ?> 
+</body>
+</html>

@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Tenant management system</title>
+	<link rel="stylesheet" href="weathercss.css">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300&display=swap" rel="stylesheet">
+    <style>
+        input:invalid{
+            color: red;
+        }
+        input:valid{
+            color: rgb(0, 85, 0);
+        }
+    </style>
+</head>
+<body> 
+	<!--YOUR HTML-->
+        <div class="mains">
+                <span id="space"></span><button id="log" onclick="clicked(id)">LOGIN</button><button id="sign" onclick="clicked(id)">SIGNUP</button><br><br>
+                <div class="content" id="content">
+                    <div  class="clslogin" id="clslogin">
+                        <form action="logincheck.php" method="post">
+                            Email<br>
+                            <input type="email" id="email" name="email" maxlength="64" pattern="[a-z0-9]+@[a-z0-9]+\.[a-z]{2,}" required><br><br>
+                            Password<br>
+                            <input type="password" id="passwdlogin" name="passwd" minlength="8" maxlength="64" required>
+                            <label><input type="checkbox" id="see"  onclick="showpasswdlogin()"><span id = "show_hidelogin">Show </span></label><br><br>
+                            <input type="submit" class="btn btn-primary" name="submit" value="Submit">
+                        </form>
+                    </div>
+                    <div class="clssignup" id="clssignup">
+                        <form action="insert.php" method="post">
+                            Name <br> 
+                            <input type="text" id="name" name="name" minlength="2" maxlength="25" pattern="[a-zA-Z]*\s?[a-zA-Z]+\s?[a-zA-Z]+"  oninvalid="this.setCustomValidity('Please enter valid name')" oninput="setCustomValidity('')" required><br><br>
+                            Email<br>
+                            <input type="email" id="email" name="email" maxlength="64" pattern="[a-z0-9]+@[a-z0-9]+\.[a-z]{2,}" required><br><br>
+                            Password<br> 
+                            <input type="password" id="passwd" name="passwd" minlength="8" maxlength="64" required>
+                            <label><input type="checkbox" id="see"  onclick="showpasswd()"><span id = "show_hide">Show </span></label><br><br>
+                            Confirm Password<br>
+                            <input type="password" id="confpasswd" minlength="8" maxlength="64" required><br><br>
+                            <input type="submit" class="btn btn-primary" name="submit" value="Submit">
+                        </form>
+                    </div>
+                </div>   
+        </div>
+<!-- YOUR JAVASCRIPT -->
+<script lang="javascript"> 
+        passwd = document.getElementById("passwd") , confpasswd = document.getElementById("confpasswd");
+        function ValidatePassword(){            
+            if(passwd.value != confpasswd.value){
+                confpasswd.setCustomValidity("Passwords Don't Match");                
+            }
+            else{
+                confpasswd.setCustomValidity('');
+            }
+        }
+        passwd.onchange = ValidatePassword;
+        confpasswd.onkeyup = ValidatePassword;
+
+        function clicked(a){     
+            switch (a) { 
+                    case "log": 
+                        document.getElementById("clssignup").style.display = "none";
+                        document.getElementById("clslogin").style.display = "unset";
+                        document.getElementById("log").style.backgroundColor = "white";
+                        document.getElementById("sign").style.backgroundColor = "#0961a8f3";
+                        break;
+                    case "sign":  
+                        document.getElementById("clslogin").style.display = "none";
+                        document.getElementById("clssignup").style.display = "unset";
+                        document.getElementById("sign").style.backgroundColor = "white";
+                        document.getElementById("log").style.backgroundColor = "#0961a8f3";
+                        break;                   
+            }
+        }   
+        function showpasswd(){
+            var passwod = document.getElementById("passwd");
+            var passwod1 = document.getElementById("confpasswd");
+            if(passwod.type === "password"){
+                passwod.type = "text";
+                passwod1.type = "text";
+                document.getElementById("show_hide").textContent = "Hide";
+            } 
+            else{
+                passwod.type = "password";
+                passwod1.type = "password";
+                document.getElementById("show_hide").textContent = "Show";
+            }
+        }
+        function showpasswdlogin(){
+            var passwod = document.getElementById("passwdlogin");
+            if(passwod.type === "password"){
+                passwod.type = "text";
+                document.getElementById("show_hidelogin").textContent = "Hide";
+            }
+            else{
+                passwod.type = "password";
+                document.getElementById("show_hidelogin").textContent = "Show";
+            }
+        }
+
+</script>
+<!-- YOUR JAVASCRIPT ENDS -->
+<!--YOUR CSS-->
+<style>
+ html{
+    zoom: 95%;
+}
+input[type=checkbox]{
+    visibility: hidden;
+}
+label{
+    cursor: pointer;
+    border: 1px solid;
+    
+}
+#show_hidelogin, #show_hide{
+    padding-right: 10px;
+}
+body{
+    font-size: 1 rem;
+    font-family: 'Outfit', sans-serif;
+    /* background-image: linear-gradient(to left,#dbe2f5,#c1def0,#b4e8f6,#c1def0,#dbe2f5); */
+    background-color: #d5ddf0;
+}
+.content{
+    width: 95%;
+    margin: auto;
+    
+}
+.clssignup{   
+    display: none;
+    
+} 
+.mains{
+    border: 1px solid #000000f3;
+    color : white; 
+    padding: 2%;
+    margin-top: 10%;
+    background-color:  #002a52f3; 
+    width: min(100%-2rem, 60px); 
+    max-width: 600px;  
+    margin-inline: auto;
+    box-shadow: 10px 10px 5px #2c489186;;
+}  
+#sign{ 
+    background-color: #0961a8f3;
+    box-shadow: 2px 2px 3px #0e304df3;
+}
+#log{
+    box-shadow: -2px 2px 3px #0e304df3;
+}
+#log, #sign{
+    border: transparent;
+    cursor: pointer;
+    font-size: 1.09rem;   
+}
+input[type="submit"]{
+    width : 101%; 
+}
+input{ 
+    border: 1px solid #0961a8f3; 
+    font-size: large;
+    width: 100% ;
+    outline: none;
+}
+#passwd, #passwdlogin{
+    width: 85%;
+    margin-right: 7px;
+}
+#see{
+    width: 10px;  
+}
+#see:hover{
+    zoom: 102%;
+    animation: spin2 2s infinite;}
+#show_hide, #show_hidelogin{
+    font-size: 95%;
+}
+#space{
+    margin-right: 3%;   
+}
+#sub, #sublogin{  
+    border:1px solid transparent;
+    font-size: larger;
+    display: flex;
+    margin: auto;
+    justify-content: center;
+    align-content: center;
+    width: 60%;
+    cursor: pointer;
+    border-radius: 2px;
+}
+#sub:hover, #sublogin:hover{
+    border: 1px solid black;
+}
+#sub:active, #sublogin:active{
+    background-color: #1f48aff3;
+}    
+</style>
+</body>
+</html>

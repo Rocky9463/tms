@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tenant management system</title>
+    <link rel="stylesheet" href="top.css">
+</head>
+<body>
+    <br><br><br>
+    <div class="o_name">
+        Tenants
+    </div><br><br>
+<?php
+    session_start();
+    $email = $_SESSION['email1'];
+    if(!$_SESSION['email1']){
+        header('Location: indexlog.html');
+    }
+    include_once 'db.php';
+        $sql = "SELECT * FROM building_details WHERE email = '$email'";
+        $result = mysqli_query($conn, $sql);
+        while($row = mysqli_fetch_assoc($result)) {
+            if($row["email"]==$email){
+                $no_rooms = $row["no_of_rooms"];
+            }
+        }       
+?>
+<!-- PERMANENT HTML-->
+<div class="permain">
+    <details id="d1" open>
+            <summary id="s1" onclick="perclicked(id)"><span id="tname1">Add Tenant</span>   <span id="rent1"></span></summary>
+            <p id="ans">
+                <a href="addtenant.html">
+                <img src="images/add.png" height="10px" id="button_image"></a>
+                <span id="rname1"></span><br>
+                <span id="date1"></span><br>
+                <span id="mob1"></span><br>
+                <span id="aadhar1"></span>                      
+            </p> 
+    </details>
+    <details id="d2"   open>
+        <summary id="s2" onclick="perclicked(id)"><span id="tname2">Add Tenant</span><span id="rent2"></span></summary>
+        <p i d="ans">
+            <a href="addtenant.html">
+            <img src="images/add.png" height="10px" id="button_image"></a>
+
+                <span id="rname2"></span><br>
+                <span id="date2"></span><br>
+                <span id="mob2"></span><br>
+                <span id="aadhar2"></span>
+        </p>
+    </details>
+    <details id="d3">
+            <summary id="s3" onclick="perclicked(id)"><span id="tname3">Add Tenant</span><span id="rent3"></span></summary>
+            <p id="ans">
+                <a href="addtenant.html">
+                <img src="images/add.png" height="10px" id="button_image"></a>
+
+                <span id="rname3"></span><br>
+                <span id="date3"></span><br>
+                <span id="mob3"></span><br>
+                <span id="aadhar3"></span>
+            </p> 
+    </details>
+    <details id="d4" >
+        <summary id="s4" onclick="perclicked(id)"><span id="tname4">Add Tenant</span><span id="rent4"></span></summary>
+        <p id="ans">
+            <a href="addtenant.html">
+            <img src="images/add.png" height="10px" id="button_image"></a>
+
+                <span id="rname4"></span><br>
+                <span id="date4"></span><br>
+                <span id="mob4"></span><br>
+                <span id="aadhar4"></span>
+        </p> 
+    </details>
+    <details id="d5" >
+        <summary id="s5" onclick="perclicked(id)"><span id="tname5">Add Tenant</span>   <span id="rent5"></span></summary>
+        <p id="ans">
+            <a href="addtenant.html">
+            <img src="images/add.png" height="10px" id="button_image"></a>
+            
+                <span id="rname5"></span><br>
+                <span id="date5"></span><br>
+                <span id="mob5"></span><br>
+                <span id="aadhar5"></span>
+        </p> 
+    </details>
+    <details id="d6" >
+        <summary id="s6" onclick="perclicked(id)"><span id="tname6">Add Tenant</span>   <span id="rent6"></span></summary>
+        <p id="ans">
+            <a href="addtenant.html">
+            <img src="images/add.png" height="10px" id="button_image"></a>
+
+                <span id="rname6"></span><br>
+                <span id="date6"></span><br>
+                <span id="mob6"></span><br>
+                <span id="aadhar6"></span>
+        </p> 
+    </details>
+    <details id="d7" >
+        <summary id="s7" onclick="perclicked(id)"><span id="tname7">Add Tenant</span>   <span id="rent7"></span></summary>
+        <p id="ans">
+            <a href="addtenant.html">
+            <img src="images/add.png" height="10px" id="button_image"></a>
+
+                <span id="rname7"></span><br>
+                <span id="date7"></span><br>
+                <span id="mob7"></span><br>
+                <span id="aadhar7"></span>
+        </p> 
+    </details>
+    <details id="d8">
+        <summary id="s8" onclick="perclicked(id)"><span id="tname8">Add Tenant</span>   <span id="rent8"></span></summary>
+        <p id="ans">
+            <a href="addtenant.html">
+            <img src="images/add.png" height="10px" id="button_image"></a>
+                
+                <span id="rname8"></span><br>
+                <span id="date8"></span><br>
+                <span id="mob8"></span><br>
+                <span id="aadhar8"></span>
+        </p> 
+    </details>
+    <details id="d9" >
+        <summary id="s9" onclick="perclicked(id)"><span id="tname9">Add Tenant</span>   <span id="rent9"></span></summary>
+        <p id="ans">
+            <a href="addtenant.html">
+            <img src="images/add.png" height="10px" id="button_image"></a>
+                <span id="rname9"></span><br>
+                <span id="date9"></span><br>
+                <span id="mob9"></span><br>
+                <span id="aadhar9"></span>
+        </p> 
+    </details>
+    <details id="d10" >
+        <summary id="s10" onclick="perclicked(id)"><span id="tname10">Add Tenant</span>   <span id="rent10"></span></summary>
+        <p id="ans">
+            <a href="addtenant.html">
+            <img src="images/add.png" height="10px" id="button_image"></a>
+                <span id="rname10"></span><br>
+                <span id="date10"></span><br>
+                <span id="mob10"></span><br>
+                <span id="aadhar10"></span>
+        </p> 
+    </details>
+</div>
+<!-- PERMANENT HTML ENDS-->
+<a href="export_tenant.php"><button id="export_tenant_button">Export tenants data</button></a>
+<a href="edittenant.html"><button id="edittenant_button">Edit tenants</button></a>
+<a href="addrooms.html"><button id="addroom_button">Add more rooms</button></a>
+<a href="deletetenant.html"><button id="deletetenant_button">Remove tenants</button></a>
+<?php
+$sql = "SELECT * FROM building_details WHERE email = '$email'";
+    $result = mysqli_query($conn, $sql);
+    while($row = mysqli_fetch_assoc($result)) {
+        if($row['email']==$email){
+            $b_name = $row['building_name'];
+        }
+    }
+    $abc = strval($email);
+    $mail = str_replace( array("@", "."), '', $abc);
+    $tenantrec = $mail."_".$b_name;
+    $tenantrec = strtolower($tenantrec);
+
+    $flag=0;
+    $sql = "show tables";
+    if ($result = mysqli_query($conn, $sql)) {
+    while($row = mysqli_fetch_assoc($result)) {
+        if($row["Tables_in_tmsdata"]===$tenantrec){
+          // echo $row["Tables_in_tmsdata"]; 
+           $flag=1;
+           break;
+        }
+    }}
+if($flag!=0){
+    $sql = "SELECT * FROM $tenantrec";
+    $result = mysqli_query($conn, $sql);
+    $i=1;
+    while($row = mysqli_fetch_assoc($result)) {
+        $tname = $row['tname'];
+        $rent = $row['rent'];
+        $rname = $row['rname'];
+        $date = $row['moveindate'];
+        $newDate = date("d-m-Y", strtotime($date));
+        $mob = $row['mob'];
+        $aadhar = $row['aadhar'];
+        echo "<style>#d$i img{display: none;}</style>";
+        echo "<script>document.getElementById('tname$i').innerHTML = 'Name : $tname';</script>";
+        echo "<script>document.getElementById('rent$i').innerHTML = 'Rent : ₹ $rent.00';</script>";
+        echo "<style>#rent$i{opacity: 1;}</style>";
+        echo "<script>document.getElementById('rname$i').innerHTML = 'Room : $rname';</script>";
+        echo "<script>document.getElementById('date$i').innerHTML = 'Move in date : $newDate';</script>";
+        if ($mob != 0){
+            echo "<script>document.getElementById('mob$i').innerHTML = 'Mobile number : $mob';</script>";
+        }else{echo "<script>document.getElementById('mob$i').innerHTML = 'Mobile number : Not entered';</script>";}
+        if ($aadhar != 0){ 
+            echo "<script>document.getElementById('aadhar$i').innerHTML = 'Aadhar number : $aadhar';</script>";
+        }else{ echo "<script>document.getElementById('aadhar$i').innerHTML = 'Aadhar number : Not entered';</script>";}
+        $i++;
+
+    }
+}
+
+?>
+<!-- PERMANENT JS -->
+<script>
+    function perclicked(a){ 
+        switch (a) { 
+            case "s1": 
+                document.getElementById("d2").toggleAttribute("open");
+                document.getElementById("d3").removeAttribute("open");
+                document.getElementById("d4").removeAttribute("open");
+                document.getElementById("d5").removeAttribute("open");
+                document.getElementById("d6").removeAttribute("open");
+                document.getElementById("d7").removeAttribute("open");
+                document.getElementById("d8").removeAttribute("open");
+                document.getElementById("d9").removeAttribute("open");
+                document.getElementById("d10").removeAttribute("open");
+                break;
+            case "s2":
+                document.getElementById("d1").toggleAttribute("open");
+                document.getElementById("d3").removeAttribute("open");
+                document.getElementById("d4").removeAttribute("open");
+                document.getElementById("d5").removeAttribute("open");
+                document.getElementById("d6").removeAttribute("open");
+                document.getElementById("d7").removeAttribute("open");
+                document.getElementById("d8").removeAttribute("open");
+                document.getElementById("d9").removeAttribute("open");
+                document.getElementById("d10").removeAttribute("open");             
+                break;
+            case "s3": 
+                 document.getElementById("d1").removeAttribute("open");
+                document.getElementById("d2").removeAttribute("open");
+                document.getElementById("d4").toggleAttribute("open");
+                document.getElementById("d5").removeAttribute("open");
+                document.getElementById("d6").removeAttribute("open");
+                document.getElementById("d7").removeAttribute("open");
+                document.getElementById("d8").removeAttribute("open");
+                document.getElementById("d9").removeAttribute("open");
+                document.getElementById("d10").removeAttribute("open");
+                break;
+            case "s4": 
+                document.getElementById("d1").removeAttribute("open");
+                document.getElementById("d2").removeAttribute("open");
+                document.getElementById("d3").toggleAttribute("open");
+                document.getElementById("d5").removeAttribute("open");
+                document.getElementById("d6").removeAttribute("open");
+                document.getElementById("d7").removeAttribute("open");
+                document.getElementById("d8").removeAttribute("open");
+                document.getElementById("d9").removeAttribute("open");
+                document.getElementById("d10").removeAttribute("open");
+                break;
+            case "s5": 
+                document.getElementById("d1").removeAttribute("open");
+                document.getElementById("d2").removeAttribute("open");
+                document.getElementById("d3").removeAttribute("open");
+                document.getElementById("d4").removeAttribute("open");
+                document.getElementById("d6").toggleAttribute("open");
+                document.getElementById("d7").removeAttribute("open");
+                document.getElementById("d8").removeAttribute("open");
+                document.getElementById("d9").removeAttribute("open");
+                document.getElementById("d10").removeAttribute("open");
+                break;
+            case "s6": 
+                document.getElementById("d1").removeAttribute("open");
+                document.getElementById("d2").removeAttribute("open");
+                document.getElementById("d3").removeAttribute("open");
+                document.getElementById("d4").removeAttribute("open");
+                document.getElementById("d5").toggleAttribute("open");
+                document.getElementById("d7").removeAttribute("open");
+                document.getElementById("d8").removeAttribute("open");
+                document.getElementById("d9").removeAttribute("open");
+                document.getElementById("d10").removeAttribute("open");
+                break;  
+            case "s7": 
+                document.getElementById("d1").removeAttribute("open");
+                document.getElementById("d2").removeAttribute("open");
+                document.getElementById("d3").removeAttribute("open");
+                document.getElementById("d4").removeAttribute("open");
+                document.getElementById("d5").removeAttribute("open");
+                document.getElementById("d6").removeAttribute("open");
+                document.getElementById("d8").toggleAttribute("open");
+                document.getElementById("d9").removeAttribute("open");
+                document.getElementById("d10").removeAttribute("open");
+                break;
+            case "s8": 
+                document.getElementById("d1").removeAttribute("open");
+                document.getElementById("d2").removeAttribute("open");
+                document.getElementById("d3").removeAttribute("open");
+                document.getElementById("d4").removeAttribute("open");
+                document.getElementById("d5").removeAttribute("open");
+                document.getElementById("d6").removeAttribute("open");
+                document.getElementById("d7").toggleAttribute("open");
+                document.getElementById("d9").removeAttribute("open");
+                document.getElementById("d10").removeAttribute("open");
+                break;
+            case "s9": 
+                document.getElementById("d1").removeAttribute("open");
+                document.getElementById("d2").removeAttribute("open");
+                document.getElementById("d3").removeAttribute("open");
+                document.getElementById("d4").removeAttribute("open");
+                document.getElementById("d5").removeAttribute("open");
+                document.getElementById("d6").removeAttribute("open");
+                document.getElementById("d7").removeAttribute("open");
+                document.getElementById("d8").removeAttribute("open");
+                document.getElementById("d10").toggleAttribute("open");
+                break;
+            case "s10": 
+                document.getElementById("d1").removeAttribute("open");
+                document.getElementById("d2").removeAttribute("open");
+                document.getElementById("d3").removeAttribute("open");
+                document.getElementById("d4").removeAttribute("open");
+                document.getElementById("d5").removeAttribute("open");
+                document.getElementById("d6").removeAttribute("open");
+                document.getElementById("d7").removeAttribute("open");
+                document.getElementById("d8").removeAttribute("open");
+                document.getElementById("d9").toggleAttribute("open");
+                break;  
+        }
+    }	
+</script>
+<!-- PERMANENT JS ENDS -->
+<!--PERMANENT CSS-->    
+<style>
+    p{
+        display: inline-block;
+        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    }
+    #heading{
+            font-family: MerriWeather;
+            font-size: 2em;
+            position: relative;
+            top: 2cm;
+    }
+    .permain{
+        text-align: center;
+        margin: auto;
+        display: flex;
+        flex-wrap: wrap;
+       
+    }
+    details {
+            border: 1px solid;
+            height: 126px;
+            transition: height 0.4s ease;
+            text-align: left;
+            padding: 5px 0 5px 15px;
+            margin-bottom: 10px;
+            margin-left: 6.5%;
+            font-family: 'Outfit', sans-serif;
+            width: 39%;      
+    }  
+    details:not([open]) {
+            height: 0.5cm; 
+    }
+    details[open] { 
+            overflow: hidden; 
+    }
+    details summary {
+            cursor: pointer;
+            list-style: none;
+    }
+    details[open] summary {
+            font-weight: 600;
+    }  
+    #rent1, #rent2, #rent3, #rent4, #rent5, #rent6, #rent7, #rent8, #rent9, #rent10{
+        margin-right: 15px;
+        /*display : none;*/
+    }
+    summary{
+        display:flex;
+        justify-content: space-between;
+    }   
+    #button_image{
+        width: 15%;
+        height: 15%;
+        border: 2px solid grey;
+        border-radius: 5%;
+        cursor: pointer;
+        opacity: 0.9;
+    }     
+    #button_image:active{
+        opacity: 1;
+        width: 14.8%;
+    }       
+</style>
+<!--PERMANENT CSS ENDS-->
+
+<?php
+    for ($x = $no_rooms+1; $x <= 10; $x++) {
+        echo "<style>#d$x{display: none;}</style>";
+      } 
+
+?>
+<form method="post" action="logout.php">
+    <input type="submit" value="log out" name="SubmitButton" id="logout_btn">
+</form>
+<a href="owner_building.html"><button id="home_btn">Home</button></a>
+<a href="tenantpage.html"><img src="images/back2.png" id="back_btn"></a>
+</body>
+</html>
+<style>
+    body{
+        background-color: #1f48af2f;
+    }
+    #addroom_button, #edittenant_button, #deletetenant_button, #export_tenant_button{
+        cursor: pointer;
+        border: 2px solid grey;
+        width: 10%;
+        height: 8%;
+        background: transparent;
+        font-size: 1em;
+        font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    }
+    #addroom_button{
+        position: fixed;
+        left: 26cm;
+        bottom: 0.8cm;
+    }
+    #export_tenant_button{
+        position: fixed;
+        left: 18cm;
+        bottom: 0.8cm;
+    }
+    #edittenant_button{
+        position: fixed;
+        left: 22cm;
+        bottom: 0.8cm;
+    }
+    #deletetenant_button{
+        position: fixed;
+        left: 30cm;
+        bottom: 0.8cm;
+    }
+    #addroom_button:hover, #edittenant_button:hover, #deletetenant_button:hover{
+        border: 2px solid;
+        
+    }
+    #addroom_button:active, #edittenant_button:active, #deletetenant_button:active{
+        border: 3px solid;
+        font-weight: bold;
+    }
+    a{
+        text-decoration: none;
+    }
+</style>
