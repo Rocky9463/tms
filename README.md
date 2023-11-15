@@ -1,4 +1,6 @@
-# Tenant management system<br>
+# TMS
+Tenant management system
+
 This is a basic tenant management system project, which lets you store data of your tenant and their rent details.<br>
 <br>
 To use the code<br>
